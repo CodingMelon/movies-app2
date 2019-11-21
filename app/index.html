@@ -5,14 +5,14 @@
 	<link rel="stylesheet" type="text/css" href="styles/styles.css">
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 </head>
-<body>
+<body ng-controller="moviesController">
 	<h1>Movies</h1>
 
-	<form>
-		<input type="text" placeholder="Title">
-		<input type="text" placeholder="Rating">
-		<input type="text" placeholder="Release Date">
-		<input type="text" placeholder="Length">
+	<form ng-submit="addMovie()">
+		<input type="text" placeholder="Title" ng-model="movie.title">
+		<input type="text" placeholder="Rating" ng-model="movie.rating">
+		<input type="text" placeholder="Release Year" ng-model="movie.releaseYear">
+		<input type="text" placeholder="Length" ng-model="movie.length">
 		<button type="submit">Add Movie</button>
 	</form>
 
@@ -23,24 +23,20 @@
 			<tr>
 				<th>Title</th>
 				<th>Rating</th>
-				<th>Release Date</th>
+				<th>Release Year</th>
 				<th>Length</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td>Terminator</td>
-				<td>8.0</td>
-				<td>11/3/2019</td>
-				<td>120</td>
-			</tr>
-			<tr>
-				<td>Terminator 2</td>
-				<td>8.7</td>
-				<td>10/7/1993</td>
-				<td>118</td>
+			<tr ng-repeat="movie in movies | orderBy: 'title'">
+				<td>{{movie.title}}</td>
+				<td>{{movie.rating}}</td>
+				<td>{{movie.releaseYear}}</td>
+				<td>{{movie.length}}</td>
 			</tr>
 		</tbody>
 	</table>
+
+	<script type="text/javascript" src="scripts/script.js"></script>
 </body>
 </html>
