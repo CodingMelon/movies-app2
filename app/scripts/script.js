@@ -4,38 +4,40 @@ let moviesApp = angular.module('moviesApp', []);
 
 moviesApp.controller('moviesController', function($scope, $http) {
 
-	// $scope.movies = [
-	// 	{
-	// 		title: 'The Terminator',
-	// 		rating: 8.0,
-	// 		releaseYear: 1984,
-	// 		length: 120
-	// 	},
-	// 	{
-	// 		title: 'Iron Man',
-	// 		rating: 7.9,
-	// 		releaseYear: 2008,
-	// 		length: 118
-	// 	},
-	// 	{
-	// 		title: 'Star Wars: Return of the Jedi',
-	// 		rating: 8.3,
-	// 		releaseYear: 1983,
-	// 		length: 102
-	// 	}
-	// ];
+	let getMovies = function() {
+		$http.get('/movies').then(function(response) {
+			$scope.movies = response.data;
+		});
+	}
+
+	getMovies();
+
+	// $scope.addMovie = function() {
+	// 	$scope.movies.push(
+	// 		{
+	// 			title: $scope.movie.title,
+	// 			rating: $scope.movie.rating,
+	// 			releaseYear: $scope.movie.releaseYear,
+	// 			length: $scope.movie.length
+	// 		}
+	// 	);
+
+	// 	clearInputs();
+	// }
 
 	$scope.addMovie = function() {
-		$scope.movies.push(
-			{
-				title: $scope.movie.title,
-				rating: $scope.movie.rating,
-				releaseYear: $scope.movie.releaseYear,
-				length: $scope.movie.length
-			}
-		);
+		// console.log($scope.movie);
+		$http.post('/movies', $scope.movie).then(function(response) {
+			getMovies();
+			clearInputs();
+		});
+	}
 
-		clearInputs();
+	$scope.deleteMovie = function(id) {
+		// console.log(id);
+		$http.delete('/movies/' + id).then(function(response){
+			getMovies();
+		});
 	}
 
 	function clearInputs() {
